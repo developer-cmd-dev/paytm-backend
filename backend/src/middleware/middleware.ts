@@ -13,11 +13,11 @@ const authMiddlware = async(req:Request,res:Response,next:NextFunction)=>{
         res.status(404).json("invalid token");
         return;
     }
+    console.log(extractedToken)
     const payload=await verifyToken(extractedToken) as {data:string};
     req.user=payload.data;
     next();
    } catch (error) {
-    
    }
 
 

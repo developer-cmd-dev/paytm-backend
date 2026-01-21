@@ -57,7 +57,22 @@ userRouter.get('/signin',authMiddlware,async(req:Request,res:Response)=>{
 })
 
 
-userRouter.put('/update')
+userRouter.put('/update',authMiddlware,async(req,res)=>{
+    const body = req.body;
+    try {
+        const findUser = await User.findByIdAndUpdate(body._id,{
+            firstname:body.firstname,
+            lastname:body.lastname,
+            email:body.email
+        });
+        if(!findUser) res.status(404).json("user not found");
+        
+        res.status(200).json("User updated successfully");
+
+    } catch (error) {
+        res.status(500).json("something went wrong");
+    }
+})
 
 
 export { userRouter };
