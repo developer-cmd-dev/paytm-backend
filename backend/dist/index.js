@@ -8,7 +8,7 @@ config();
 app.use(bodyParser.json());
 const MONGO_URL = process.env.MONGO_URL;
 app.post('/signin', async (req, res) => {
-    const { name, email, password } = req.body;
+    const { firstname, lastname, email, password } = req.body;
     try {
         const findUser = await User.findOne({
             email: email,
@@ -16,7 +16,8 @@ app.post('/signin', async (req, res) => {
         if (!findUser) {
             const response = await User.create([
                 {
-                    name: name,
+                    firstname: firstname,
+                    lastname: lastname,
                     email: email,
                     password: password
                 }

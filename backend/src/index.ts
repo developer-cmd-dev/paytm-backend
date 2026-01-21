@@ -12,7 +12,7 @@ const MONGO_URL=process.env.MONGO_URL as string;
 app.post('/signin',async (req:Request,res:Response)=>{
 
 
-    const {name,email,password} = req.body;
+    const {firstname,lastname,email,password} = req.body;
 
     try{
 
@@ -22,7 +22,8 @@ app.post('/signin',async (req:Request,res:Response)=>{
         if(!findUser){
          const response = await  User.create([
                 {
-                    name:name,
+                    firstname:firstname,
+                    lastname:lastname,
                     email:email,
                     password:password
                 }
