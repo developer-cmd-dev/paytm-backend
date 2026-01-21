@@ -1,4 +1,4 @@
-import type { IUser } from "./types.js";
+import type { IUser } from "./types/types.js";
 export declare const User: import("mongoose").Model<IUser, {}, {}, {}, import("mongoose").Document<unknown, {}, IUser, {}, import("mongoose").DefaultSchemaOptions> & IUser & Required<{
     _id: import("mongoose").Types.ObjectId;
 }> & {

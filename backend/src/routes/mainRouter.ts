@@ -1,9 +1,10 @@
-import express from 'express';
-import type{ Request,Response } from 'express';
-import { User } from '../db.js';
-import { router as userRouter } from './userRouter.js';
+import express, { type Request, type Response } from 'express';
+import { userRouter } from './userRouter.js';
  const router = express.Router();
 
-router.post('/user',userRouter);
+
+router.use('/user',userRouter);
+
+
 
 export  {router};
