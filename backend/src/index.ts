@@ -3,43 +3,22 @@ import bodyParser from 'body-parser';
 import { config } from 'dotenv';
 import mongoose from 'mongoose';
 import { User } from './db.js';
+import {router as v1Router}  from './routes/mainRouter.js';
+import cors from 'cors';
+
 const app = express();
 config()
+
+
+
+
+
 app.use(bodyParser.json());
-const MONGO_URL=process.env.MONGO_URL as string;
+app.use(cors());
+
+app.use('/api/v1',v1Router);
 
 
-app.post('/signin',async (req:Request,res:Response)=>{
-
-
-    const {firstname,lastname,email,password} = req.body;
-
-    try{
-
-        const findUser = await User.findOne({
-           email:email,
-        })
-        if(!findUser){
-         const response = await  User.create([
-                {
-                    firstname:firstname,
-                    lastname:lastname,
-                    email:email,
-                    password:password
-                }
-            ])
-            res.status(200).json(response);
-        }else{
-            res.status(400).json("User already exist")
-
-        }
-    }catch(error){
-        console.log(error)
-    }
- 
-
-
-})
 
 
 
