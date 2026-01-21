@@ -7,5 +7,10 @@ const userSchema = new Schema({
 }, {
     timestamps: true,
 });
+const accountSchema = new Schema({
+    balance: { type: Number, default: 0, required: true },
+    userId: { type: Schema.Types.ObjectId, ref: "User" }
+});
 export const User = model('user', userSchema);
+export const Account = model('account', accountSchema);
 //# sourceMappingURL=db.js.map

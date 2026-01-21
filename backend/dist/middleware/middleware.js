@@ -7,12 +7,13 @@ const authMiddlware = async (req, res, next) => {
             res.status(404).json("invalid token");
             return;
         }
-        console.log(extractedToken);
         const payload = await verifyToken(extractedToken);
-        req.user = payload.data;
+        req.userId = payload.data;
         next();
     }
     catch (error) {
+        console.error("Auth error:", error);
+        return res.status(401).json("Invalid or expired token");
     }
 };
 export { authMiddlware };
