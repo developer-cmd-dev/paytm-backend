@@ -15,6 +15,12 @@ const UserZodSchema = z.object({
     password: z.string()
 })
 
+const UserZodUpdateBody = z.object({
+    firstname:z.string().optional(),
+    lastname:z.string().optional(),
+    email:z.string().optional()
+})
+
 
 
 userRouter.post('/signup', async (req: Request, res: Response) => {
@@ -60,18 +66,24 @@ userRouter.get('/signin',authMiddlware,async(req:Request,res:Response)=>{
 userRouter.put('/update',authMiddlware,async(req,res)=>{
     const body = req.body;
     try {
-        const findUser = await User.findByIdAndUpdate(body._id,{
-            firstname:body.firstname,
-            lastname:body.lastname,
-            email:body.email
-        });
-        if(!findUser) res.status(404).json("user not found");
-        
+        const {success}= UserZodUpdateBody.safeParse(body);
+        if(!success){
+            res.status(404).json('Invalid input');
+        }
+
+        const updatedUser =await User.updateOne({_id:body._id},body);
         res.status(200).json("User updated successfully");
 
     } catch (error) {
         res.status(500).json("something went wrong");
     }
+})
+
+
+userRouter.get('/bulk',async(req,res)=>{
+    const query = req.query;
+    console.log(query);
+    res.send('query')
 })
 
 
